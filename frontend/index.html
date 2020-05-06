@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+
+
+</head>
+<body>
+<div class="container">
+    <h2>Upload your picture</h2>
+    <br>
+
+    <form id="uploadForm">
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input id="uploadFile" type="file" accept="image/jpeg, image/png">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" style="color: aqua">
+            </div>
+        </div>
+        <input type="submit" value="Submit">
+<!--        <a class="waves-effect waves-light btn" type="submit">Submit</a>-->
+    </form>
+
+    <h1>But what is it?</h1>
+    <h1 style="color: #882fcb" id="result"></h1>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
