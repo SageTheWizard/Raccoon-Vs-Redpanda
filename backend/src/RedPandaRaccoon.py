@@ -1,8 +1,9 @@
 import tensorflow as tf
-
+import numpy
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing import image
 
 import os
 
@@ -66,21 +67,38 @@ def main():
         Dense(1)
     ])
 
-    model.compile(optimizer='adam',
-                  loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
-                  metrics=['accuracy'])
 
-    model.summary()
+    run_or_train = input("Run or Train (1 or 0): ")
 
-    history = model.fit(
-        generated_training,
-        steps_per_epoch=(total_train_imgs / batch_size),
-        epochs=epochs,
-        validation_data=generated_validation,
-        validation_steps=(total_valid_imgs / batch_size)
-    )
+    if run_or_train == 0:
+        model.compile(optimizer='adam',
+                      loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+                      metrics=['accuracy'])
+        model.summary()
+        history = model.fit(
+            generated_training,
+            steps_per_epoch=(total_train_imgs / batch_size),
+            epochs=epochs,
+            validation_data=generated_validation,
+            validation_steps=(total_valid_imgs / batch_size)
+        )
 
-    model.save('RacconVRedPanda.h5')
+        model.save('RacconVRedPanda.h5')
+    else:
+        model.load_weights('RacconVRedPanda.h5')
+        model.compile(optimizer='adam',
+                      loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+                      metrics=['accuracy'])
+        img_path = input("Path To Image: ")
+        test_image = image.load_img(img_path, target_size=(HEIGHT, WIDTH))
+        test_image = image.img_to_array(test_image)
+        test_image = numpy.expand_dims(test_image, axis = 0)
+        #test_image = test_image.reshape(HEIGHT, WIDTH)
 
+        prediction = model.predict(test_image)[0][0]
 
+        if prediction > 512:
+            print("Red Panda")
+        else:
+            print("Raccoon")
 main()
